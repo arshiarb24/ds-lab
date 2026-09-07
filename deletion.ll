@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyMduGp50XHMv3gmZDpCptBL",
+      "authorship_tag": "ABX9TyNEXH+vH54fVLpAn2sOQcNU",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -28,80 +28,51 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 2,
+      "source": [
+        "class Node:\n",
+        "    def __init__(self, data):\n",
+        "        self.data = data\n",
+        "        self.next = None\n",
+        "\n",
+        "class LinkedList:\n",
+        "    def __init__(self):\n",
+        "        self.head = None\n",
+        "\n",
+        "    def printList(self):\n",
+        "        temp = self.head\n",
+        "        while (temp):\n",
+        "            print(temp.data)\n",
+        "            temp = temp.next\n",
+        "\n",
+        "if __name__ == '__main__':\n",
+        "    llist = LinkedList()\n",
+        "    llist.head = Node(1)\n",
+        "    second = Node(2)\n",
+        "    third = Node(3)\n",
+        "\n",
+        "    llist.head.next = second\n",
+        "    second.next = third\n",
+        "\n",
+        "    llist.printList()"
+      ],
       "metadata": {
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
-        "id": "mxoHqFUkdrdi",
-        "outputId": "3ad0f34b-156a-4c42-a846-9fe7a0a3e867"
+        "id": "bv_VY3rCfXoA",
+        "outputId": "d003d189-50b8-450c-9727-d38066d7f682"
       },
+      "execution_count": 4,
       "outputs": [
         {
           "output_type": "stream",
           "name": "stdout",
           "text": [
-            "Thu\n",
-            "Wed\n",
-            "Mon\n"
+            "1\n",
+            "2\n",
+            "3\n"
           ]
         }
-      ],
-      "source": [
-        "class Node:\n",
-        "    def __init__(self, data=None):\n",
-        "        self.data = data\n",
-        "        self.next = None\n",
-        "\n",
-        "class SLinkedList:\n",
-        "    def __init__(self):\n",
-        "        self.head = None\n",
-        "\n",
-        "    def Atbegining(self, data_in):\n",
-        "        NewNode = Node(data_in)\n",
-        "        NewNode.next = self.head\n",
-        "        self.head = NewNode\n",
-        "\n",
-        "    def RemoveNode(self, Removekey):\n",
-        "        HeadVal = self.head\n",
-        "\n",
-        "        # Store head node\n",
-        "        # If head node itself holds the key to be deleted\n",
-        "        if HeadVal is not None:\n",
-        "            if HeadVal.data == Removekey:\n",
-        "                self.head = HeadVal.next\n",
-        "                return\n",
-        "\n",
-        "        # Search for the key to be deleted, keep track of the\n",
-        "        # previous node as we need to change 'prev.next'\n",
-        "        prev = None\n",
-        "        while HeadVal is not None:\n",
-        "            if HeadVal.data == Removekey:\n",
-        "                break\n",
-        "            prev = HeadVal\n",
-        "            HeadVal = HeadVal.next\n",
-        "\n",
-        "        # If key was not present in linked list\n",
-        "        if HeadVal == None:\n",
-        "            return\n",
-        "\n",
-        "        # Unlink the node from linked list\n",
-        "        if prev is not None: # Ensure prev exists before trying to access its next attribute\n",
-        "            prev.next = HeadVal.next\n",
-        "\n",
-        "    def LListprint(self):\n",
-        "        printval = self.head\n",
-        "        while (printval):\n",
-        "            print(printval.data)\n",
-        "            printval = printval.next\n",
-        "\n",
-        "llist = SLinkedList()\n",
-        "llist.Atbegining(\"Mon\")\n",
-        "llist.Atbegining(\"Tue\")\n",
-        "llist.Atbegining(\"Wed\")\n",
-        "llist.Atbegining(\"Thu\")\n",
-        "llist.RemoveNode(\"Tue\")\n",
-        "llist.LListprint()"
       ]
     }
   ]
