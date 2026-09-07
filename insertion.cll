@@ -1,0 +1,150 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPlM3FW61/FyGd4YLDE3I3H",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/arshiarb24/ds-lab/blob/main/insertion.cll\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class Node:\n",
+        "    def __init__(self, data):\n",
+        "        self.data = data\n",
+        "        self.next = None\n",
+        "\n",
+        "class CircularLinkedList:\n",
+        "    def __init__(self):\n",
+        "        self.last = None\n",
+        "\n",
+        "    def addToEmpty(self, data):\n",
+        "        # This method is designed to be called only when the list is empty\n",
+        "        temp = Node(data)\n",
+        "        self.last = temp\n",
+        "        self.last.next = self.last  # Points to itself for a single node circular list\n",
+        "        return self.last\n",
+        "\n",
+        "    def addBegin(self, data):\n",
+        "        if self.last is None:\n",
+        "            return self.addToEmpty(data)\n",
+        "\n",
+        "        temp = Node(data)\n",
+        "        temp.next = self.last.next\n",
+        "        self.last.next = temp\n",
+        "        return self.last\n",
+        "\n",
+        "    def addEnd(self, data):\n",
+        "        if self.last is None:\n",
+        "            return self.addToEmpty(data)\n",
+        "\n",
+        "        temp = Node(data)\n",
+        "        temp.next = self.last.next\n",
+        "        self.last.next = temp\n",
+        "        self.last = temp  # New node becomes the new last node\n",
+        "        return self.last\n",
+        "\n",
+        "    def addAfter(self, data, item):\n",
+        "        if self.last is None:\n",
+        "            print(\"List is empty, cannot add after an item.\")\n",
+        "            return None\n",
+        "\n",
+        "        temp = Node(data)\n",
+        "        current = self.last.next  # Start from the head\n",
+        "        found = False\n",
+        "\n",
+        "        while True:\n",
+        "            if current.data == item:\n",
+        "                found = True\n",
+        "                temp.next = current.next\n",
+        "                current.next = temp\n",
+        "                if current == self.last:  # If we added after the last node\n",
+        "                    self.last = temp      # then the new node becomes the last node\n",
+        "                break\n",
+        "            current = current.next\n",
+        "            if current == self.last.next:  # If we've completed a full circle without finding the item\n",
+        "                break\n",
+        "\n",
+        "        if not found:\n",
+        "            print(f\"{item} not present in the list.\")\n",
+        "        return self.last\n",
+        "\n",
+        "    def traverse(self):\n",
+        "        if self.last is None:\n",
+        "            print(\"List is empty\")\n",
+        "            return\n",
+        "\n",
+        "        temp = self.last.next  # Start from the head of the circular list\n",
+        "        while True:\n",
+        "            print(temp.data, end=\" \")\n",
+        "            temp = temp.next\n",
+        "            if temp == self.last.next:  # Break when we return to the head\n",
+        "                break\n",
+        "        print()\n",
+        "\n",
+        "if __name__ == '__main__':\n",
+        "    llist = CircularLinkedList()\n",
+        "    # Add elements to the list\n",
+        "    last = llist.addToEmpty(6) # Initialize the list with one element\n",
+        "    last = llist.addBegin(4)\n",
+        "    last = llist.addBegin(2)\n",
+        "    last = llist.addEnd(8)\n",
+        "    last = llist.addEnd(12)\n",
+        "\n",
+        "    print(\"List after additions:\")\n",
+        "    llist.traverse()\n",
+        "\n",
+        "    last = llist.addAfter(10, 8)\n",
+        "    print(\"List after adding 10 after 8:\")\n",
+        "    llist.traverse()\n",
+        "\n",
+        "    last = llist.addAfter(1, 100) # Test case for item not found\n",
+        "    print(\"List after attempting to add 1 after 100 (not present):\")\n",
+        "    llist.traverse()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "WcgXqbIHlTpB",
+        "outputId": "95d70d31-1ae6-4f74-f975-739cec936583"
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "List after additions:\n",
+            "2 4 6 8 12 \n",
+            "List after adding 10 after 8:\n",
+            "2 4 6 8 10 12 \n",
+            "100 not present in the list.\n",
+            "List after attempting to add 1 after 100 (not present):\n",
+            "2 4 6 8 10 12 \n"
+          ]
+        }
+      ]
+    }
+  ]
+}
