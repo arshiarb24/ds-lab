@@ -1,0 +1,150 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOrOeZBqYQuatiD2fbSDqxt",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/arshiarb24/ds-lab/blob/main/deletion.cll\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "5SJfpfahm2hN",
+        "outputId": "886cfdeb-4984-4a84-e423-7507af9a2468"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Original List:\n",
+            "1 -> 2 -> 3 -> 4\n",
+            "\n",
+            "\n",
+            "Deleting elements one by one:\n",
+            "List after 1 deletion:\n",
+            "1 -> 2 -> 3\n",
+            "\n",
+            "\n",
+            "List after 2 deletions:\n",
+            "1 -> 2\n",
+            "\n",
+            "\n",
+            "List after 3 deletions:\n",
+            "1\n",
+            "\n",
+            "\n",
+            "List after 4 deletions (empty list):\n",
+            "List is empty\n"
+          ]
+        }
+      ],
+      "source": [
+        "class Node:\n",
+        "    def __init__(self, data):\n",
+        "        self.data = data\n",
+        "        self.next = None\n",
+        "\n",
+        "class CreateList:\n",
+        "    def __init__(self):\n",
+        "        # Initialize head and tail to None for an empty list initially\n",
+        "        self.head = None\n",
+        "        self.tail = None\n",
+        "\n",
+        "    def add(self, data):\n",
+        "        newNode = Node(data)\n",
+        "        if self.head is None:\n",
+        "            self.head = newNode\n",
+        "            self.tail = newNode\n",
+        "            newNode.next = self.head  # Point to itself for a single-node circular list\n",
+        "        else:\n",
+        "            self.tail.next = newNode\n",
+        "            self.tail = newNode\n",
+        "            self.tail.next = self.head  # Maintain circular link\n",
+        "\n",
+        "    def deleteEnd(self):\n",
+        "        if self.head is None:\n",
+        "            # List is empty, nothing to delete\n",
+        "            return\n",
+        "        elif self.head == self.tail:  # Only one element in the list\n",
+        "            self.head = None\n",
+        "            self.tail = None\n",
+        "        else:\n",
+        "            current = self.head\n",
+        "            while current.next != self.tail:\n",
+        "                current = current.next\n",
+        "            self.tail = current\n",
+        "            self.tail.next = self.head\n",
+        "\n",
+        "    def display(self):\n",
+        "        if self.head is None:\n",
+        "            print(\"List is empty\")\n",
+        "            return\n",
+        "\n",
+        "        current = self.head\n",
+        "        elements = []\n",
+        "        while True:\n",
+        "            elements.append(str(current.data))\n",
+        "            current = current.next\n",
+        "            if current == self.head:\n",
+        "                break\n",
+        "        print(\" -> \".join(elements))\n",
+        "        print(\"\\n\")\n",
+        "\n",
+        "# The class 'CircularLinkedList' was declared but not used.\n",
+        "# The operations were directly on an instance of 'CreateList'.\n",
+        "# Removed the redundant empty class declaration for clarity.\n",
+        "\n",
+        "cl = CreateList()\n",
+        "print(\"Original List:\")\n",
+        "cl.add(1)\n",
+        "cl.add(2)\n",
+        "cl.add(3)\n",
+        "cl.add(4)\n",
+        "cl.display()\n",
+        "\n",
+        "print(\"Deleting elements one by one:\")\n",
+        "\n",
+        "cl.deleteEnd()\n",
+        "print(\"List after 1 deletion:\")\n",
+        "cl.display()\n",
+        "\n",
+        "cl.deleteEnd()\n",
+        "print(\"List after 2 deletions:\")\n",
+        "cl.display()\n",
+        "\n",
+        "cl.deleteEnd()\n",
+        "print(\"List after 3 deletions:\")\n",
+        "cl.display()\n",
+        "\n",
+        "cl.deleteEnd()\n",
+        "print(\"List after 4 deletions (empty list):\")\n",
+        "cl.display()\n"
+      ]
+    }
+  ]
+}
