@@ -1,0 +1,76 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyM9XwSR1TaCZDVseDKR4Aq2",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/arshiarb24/ds-lab/blob/main/implement.bs\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def binarySearch (arr, l, r, x):\n",
+        "    if r >= l:\n",
+        "        mid = l + (r - l) // 2  # Use integer division for mid\n",
+        "        midd = int(mid)\n",
+        "\n",
+        "        if arr[midd] == x:\n",
+        "            return midd\n",
+        "\n",
+        "        elif arr[midd] > x:\n",
+        "            return binarySearch(arr, l, midd - 1, x)\n",
+        "\n",
+        "        else:\n",
+        "            return binarySearch(arr, midd + 1, r, x)\n",
+        "\n",
+        "    return -1\n",
+        "\n",
+        "arr = [ 2, 3, 4, 10, 40 ]\n",
+        "x = 10\n",
+        "result = binarySearch(arr, 0, len(arr) - 1, x)\n",
+        "\n",
+        "if result != -1:\n",
+        "    print(\"Element is present at index %d\" % result)\n",
+        "else:\n",
+        "    print(\"Element is not present in array\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "vlJi5FgsXy_y",
+        "outputId": "ca93a896-b929-40b0-f3ee-452950fda4a0"
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Element is present at index 3\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
