@@ -1,0 +1,94 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyM7gr6Dd4aQMXJiZEdGtegU",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/arshiarb24/ds-lab/blob/main/postfix%20.expression\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class Evaluate:\n",
+        "    def __init__(self, capacity):\n",
+        "        self.top = -1\n",
+        "        self.capacity = capacity\n",
+        "        # This array is used a stack\n",
+        "        self.array = []\n",
+        "\n",
+        "    def isEmpty(self):\n",
+        "        return True if self.top == -1 else False\n",
+        "\n",
+        "    def peek(self):\n",
+        "        if not self.isEmpty():\n",
+        "            return self.array[-1]\n",
+        "        return \"$\" # Returning a sentinel value if stack is empty\n",
+        "\n",
+        "    def pop(self):\n",
+        "        if not self.isEmpty():\n",
+        "            self.top -= 1\n",
+        "            return self.array.pop()\n",
+        "        else:\n",
+        "            return \"$\"\n",
+        "\n",
+        "    def push(self, op):\n",
+        "        self.top += 1\n",
+        "        self.array.append(op)\n",
+        "\n",
+        "    def evaluatePostfix(self, exp):\n",
+        "        for i in exp:\n",
+        "            if i.isdigit():\n",
+        "                self.push(i)\n",
+        "            else:\n",
+        "                val1 = self.pop()\n",
+        "                val2 = self.pop()\n",
+        "                # eval() expects string arguments to be numbers or valid expressions\n",
+        "                # Ensure val1 and val2 are numbers if the expression is for numerical evaluation\n",
+        "                # For '231*+9-', it implies numbers. Convert to int for calculation.\n",
+        "                self.push(str(eval(val2 + i + val1)))\n",
+        "        return int(self.pop())\n",
+        "\n",
+        "exp = \"231*+9-\"\n",
+        "obj = Evaluate(len(exp))\n",
+        "print(\"postfix evaluation: %d\" % (obj.evaluatePostfix(exp)))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "aPiC52TOUrPE",
+        "outputId": "227fbf95-7c00-431a-aa68-4261a2f19315"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "postfix evaluation: -4\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
