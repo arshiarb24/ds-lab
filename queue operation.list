@@ -1,0 +1,94 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMa1/V87ZbkC+zZdNQtpH/U",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/arshiarb24/ds-lab/blob/main/queue%20operation.list\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class Node:\n",
+        "    def __init__(self, data):\n",
+        "        self.data = data\n",
+        "        self.next = None\n",
+        "\n",
+        "class Queue:\n",
+        "    def __init__(self):\n",
+        "        self.front = None\n",
+        "        self.rear = None\n",
+        "\n",
+        "    def isEmpty(self):\n",
+        "        return self.front is None\n",
+        "\n",
+        "    def EnQueue(self, item):\n",
+        "        temp = Node(item)\n",
+        "        if self.rear is None:\n",
+        "            self.front = self.rear = temp\n",
+        "            return\n",
+        "        self.rear.next = temp\n",
+        "        self.rear = temp\n",
+        "\n",
+        "    def DeQueue(self):\n",
+        "        if self.isEmpty():\n",
+        "            return None # Or raise an exception for an empty queue\n",
+        "        temp = self.front\n",
+        "        self.front = temp.next\n",
+        "        if self.front is None:\n",
+        "            self.rear = None\n",
+        "        return str(temp.data)\n",
+        "\n",
+        "if __name__ == '__main__':\n",
+        "    q = Queue()\n",
+        "    q.EnQueue(10)\n",
+        "    q.EnQueue(20)\n",
+        "    print(\"Dequeued item is \" + q.DeQueue())\n",
+        "    print(\"Dequeued item is \" + q.DeQueue())\n",
+        "    q.EnQueue(30)\n",
+        "    q.EnQueue(40)\n",
+        "    q.EnQueue(50)\n",
+        "    print(\"Dequeued item is \" + q.DeQueue())"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "4alZ31spVBqj",
+        "outputId": "48dd000f-9bd4-400e-b765-6be48981ae5f"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Dequeued item is 10\n",
+            "Dequeued item is 20\n",
+            "Dequeued item is 30\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
