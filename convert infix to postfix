@@ -1,0 +1,122 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOc7/q30VgciGf3/0I2gnXS",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/arshiarb24/ds-lab/blob/main/convert%20infix%20to%20postfix\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "XJdW8jVbTa8b",
+        "outputId": "baa42561-9619-4bed-b777-a8aaad4a9fac"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "-1"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 2
+        }
+      ],
+      "source": [
+        "class Conversion:\n",
+        "    def __init__(self, capacity):\n",
+        "        self.top = -1\n",
+        "        self.capacity = capacity\n",
+        "        self.array = []\n",
+        "        self.output = []\n",
+        "        self.precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}\n",
+        "\n",
+        "    def isEmpty(self):\n",
+        "        return True if self.top == -1 else False\n",
+        "\n",
+        "    def peek(self):\n",
+        "        if not self.isEmpty():\n",
+        "            return self.array[-1]\n",
+        "        return \"$\" # Return a sentinel value or raise an error if stack is empty\n",
+        "\n",
+        "    def pop(self):\n",
+        "        if not self.isEmpty():\n",
+        "            self.top -= 1\n",
+        "            return self.array.pop()\n",
+        "        else:\n",
+        "            return \"$\"\n",
+        "\n",
+        "    def push(self, op):\n",
+        "        self.top += 1\n",
+        "        self.array.append(op)\n",
+        "\n",
+        "    def isOperand(self, ch):\n",
+        "        return ch.isalpha()\n",
+        "\n",
+        "    def notGreater(self, i):\n",
+        "        try:\n",
+        "            a = self.precedence[i]\n",
+        "            b = self.precedence[self.peek()]\n",
+        "            return True if a <= b else False\n",
+        "        except KeyError:\n",
+        "            return False\n",
+        "\n",
+        "    def infixToPostfix(self, exp):\n",
+        "        for i in exp:\n",
+        "            if self.isOperand(i):\n",
+        "                self.output.append(i)\n",
+        "            elif i == '(':\n",
+        "                self.push(i)\n",
+        "            elif i == ')':\n",
+        "                while (not self.isEmpty()) and self.peek() != '(':\n",
+        "                    self.output.append(self.pop())\n",
+        "                # After the loop, if stack is not empty and top is '(', pop the '('\n",
+        "                if (not self.isEmpty() and self.peek() == '('):\n",
+        "                    self.pop() # Discard the opening parenthesis\n",
+        "                else:\n",
+        "                    # Unbalanced parentheses (no matching '(' found)\n",
+        "                    return -1 # Indicate an error\n",
+        "            else:\n",
+        "                while (not self.isEmpty()) and self.notGreater(i):\n",
+        "                    self.output.append(self.pop())\n",
+        "                self.push(i)\n",
+        "\n",
+        "        # Pop all the remaining operators from the stack\n",
+        "        while not self.isEmpty():\n",
+        "            self.output.append(self.pop())\n",
+        "\n",
+        "        print(\"\".join(self.output))\n",
+        "\n",
+        "exp = \"a+b*(c^d-e)^(f+g*h)-i\"\n",
+        "obj = Conversion(len(exp))\n",
+        "obj.infixToPostfix(exp)"
+      ]
+    }
+  ]
+}
