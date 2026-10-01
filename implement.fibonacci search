@@ -1,0 +1,90 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNh/xJjZOpMEiMO1AMluOIS",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/arshiarb24/ds-lab/blob/main/implement.fibonacci%20search\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "def fibMonaccianSearch(arr, x, n):\n",
+        "    fibMMm2 = 0\n",
+        "    fibMMm1 = 1\n",
+        "    fibM = fibMMm2 + fibMMm1\n",
+        "\n",
+        "    while (fibM < n):\n",
+        "        fibMMm2 = fibMMm1\n",
+        "        fibMMm1 = fibM\n",
+        "        fibM = fibMMm2 + fibMMm1\n",
+        "\n",
+        "    offset = -1\n",
+        "\n",
+        "    while (fibM > 1):\n",
+        "        i = min(offset + fibMMm2, n - 1)\n",
+        "\n",
+        "        if (arr[i] < x):\n",
+        "            fibM = fibMMm1\n",
+        "            fibMMm1 = fibMMm2\n",
+        "            fibMMm2 = fibM - fibMMm1\n",
+        "            offset = i\n",
+        "\n",
+        "        elif (arr[i] > x):\n",
+        "            fibM = fibMMm2\n",
+        "            fibMMm1 = fibMMm1 - fibMMm2\n",
+        "            fibMMm2 = fibM - fibMMm1\n",
+        "\n",
+        "        else:\n",
+        "            return i\n",
+        "\n",
+        "    if (fibMMm1 and arr[offset + 1] == x):\n",
+        "        return offset + 1\n",
+        "\n",
+        "    return -1\n",
+        "\n",
+        "arr = [10, 22, 35, 40, 45, 50, 80, 82, 85, 90, 100]\n",
+        "n = len(arr)\n",
+        "x = 85\n",
+        "print(\"Found at index:\", fibMonaccianSearch(arr, x, n))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DaMdjVK6YUEs",
+        "outputId": "0505b734-ee54-4037-ecf4-eac821c58ca1"
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Found at index: 8\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
